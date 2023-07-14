@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Taxikalkylator</title>
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+  
+  <style>
+
+    body {
+  font-family: 'Ubuntu', sans-serif;
+      margin: 0;
+      background: #f2f2f2; 
+    }
+    
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1); 
+    }
+    
+    /* Form */
+    
+    .form-group {
+      margin: 20px 0;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+    
+    input, select {
+      width: 100%; 
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+
+    /* Button */
+    
+    button {
+      background: #008200;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer; 
+    }
+
+    /* Result */
+    
+    #result {
+      margin-top: 30px;
+      padding: 20px;
+      background: #eee;
+      border-radius: 5px;
+    }
+
+
+
+  </style>
+  
+</head>
+
+<body>
+
+
+
+  <div class="container">
+
+    <h1>Taxikalkylator</h1>
+
+    <!-- Your code and inputs -->
+    
+    <div id="resultat"></div>
+
+  </div>
+
+<label>Antal passagerare:</label>
+
+<select id="passengers">
+  <option value="1-4">1-4 personer</option>
+  <option value="5-8">5-8 personer</option>
+</select>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Taxi Priskalkylator</title>
+</head>
+
+<body>
+
+  <label for="taxa">Välj Taxa:</label>
+
+  <select id="taxa">
+    <option value="1">Taxa 1</option>
+    <option value="2">Taxa 2</option>
+    <option value="3">Taxa 3</option>
+    <option value="4">Taxa 4</option>
+  </select>
+
+  <br>
+
+  <label for="avstånd">Avstånd (km):</label>
+  <input type="number" id="avstånd" placeholder="Ange avstånd">
+
+  <br>
+
+  <label for="tid">Tid (timmar och minuter):</label>
+  <input type="number" id="timmar" placeholder="Timmar"> :
+  <input type="number" id="minuter" placeholder="Minuter">
+
+  <br>
+
+  <button onclick="beräkna()">Beräkna pris</button>
+
+  <p id="resultat"></p>
+
+  <script>
+    function beräkna() {
+      const taxa = document.getElementById("taxa").value;
+      const avstånd = document.getElementById("avstånd").value;
+
+      // Hämta tidsvärden  
+      let timmar = document.getElementById("timmar").value;
+      let minuter = document.getElementById("minuter").value;
+      
+      // Standard till 0 om tomma
+      if(!timmar) {
+        timmar = 0;
+      }
+      if(!minuter) {
+        minuter = 0;
+      }
+      
+      // Konvertera till flyttal
+      timmar = parseFloat(timmar);
+      minuter = parseFloat(minuter);
+
+      let prisPerKm;
+      let prisPerTimme;
+
+    // Get passenger selection
+const passengers = document.getElementById("passengers").value;
+
+let startPrice;
+
+if(passengers == "1-4") {
+  startPrice = 49;
+} else {
+  startPrice = 79;
+}
+
+if(passengers == "1-4") {
+
+  // 1-4 Pricing
+  if (taxa == 1) {
+    prisPerKm = 15.35; 
+    prisPerTimme = 621;
+  } else if (taxa == 2) {
+    prisPerKm = 17.20;
+    prisPerTimme = 733;
+  } else if (taxa == 3) {
+    prisPerKm = 18.90;
+    prisPerTimme = 778;
+  } else if (taxa == 4) {
+    prisPerKm = 21.50;
+    prisPerTimme = 869;
+  }
+
+} else if (passengers == "5-8") {
+
+  // 5-8 Pricing
+  if (taxa == 1) {
+    prisPerKm = 19.19;
+    prisPerTimme = 776;
+  } else if (taxa == 2) {
+    prisPerKm = 21.50; 
+    prisPerTimme = 916;
+  } else if (taxa == 3) {
+    prisPerKm = 23.63;
+    prisPerTimme = 973;
+  } else if (taxa == 4) {
+    prisPerKm = 26.88;
+    prisPerTimme = 1086;
+  }
+
+}
+
+      const totalTid = timmar + minuter / 60;
+      const kmPris = avstånd * prisPerKm;
+      const timPris = totalTid * prisPerTimme;
+
+      const totalPris = startPrice + kmPris + timPris;
+      
+       let resultatText = "Totalpris: " + totalPris.toFixed(2) + " kr";
+
+      resultatText += "<br><br>";
+
+      resultatText += "Beräkning:<br>";
+      resultatText += "Grundpris: " + startPrice + " kr<br>";
+      resultatText += "Km-pris: " + kmPris.toFixed(2) + " kr<br>";
+      resultatText += avstånd + " km x " + prisPerKm + " kr/km<br>";
+      resultatText += "Tim-pris: " + timPris.toFixed(2) + " kr<br>";
+      resultatText += totalTid.toFixed(2) + " timmar x " + prisPerTimme + " kr/timme<br>";
+
+      document.getElementById("resultat").innerHTML = 
+        "<span style='font-size: 32px; color: green'>" + resultatText + "</span>";
+    }
+  </script>
+
+<p>OBS! DU SOM ANVÄNDER DENNA WEBBSIDA ANSVARAR FÖR ATT PRISET ÄR KORREKT</p>
+
+<p class="copyright" id="copyright">&copy; Christian Flach 2023</p>
+
+</body>
+</html>
